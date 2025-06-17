@@ -78,6 +78,7 @@ img {
     & span {
       background: linear-gradient(to right, #00cfff, #4b5bff, #7a3eff, #ff00c8);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: bold;
     }
