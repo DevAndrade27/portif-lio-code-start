@@ -32,52 +32,7 @@ function getVisibleCount() {
   return window.innerWidth <= mobileScreenWidth ? 1 : 3;
 }
 
-// Função responsável por mostrar os cards corretos na tela
-function showCards() {
-  // Percorre todos os cards, recebendo o card atual e seu índice
-  cards.forEach((card, index) => {
-    // Verifica se o card está dentro do intervalo que deve ser mostrado
-    if (index >= currentIndex && index < currentIndex + getVisibleCount()) {
-      card.style.display = "block"; // exibe o card
-    } else {
-      card.style.display = "none"; // esconde o card
-    }
-  });
-  const disabledPrevButton = currentIndex === 0;
 
-  disabledPrevButton ? prevButton.classList.add("disabled") : prevButton.classList.remove("disabled");  
-
-  const disabledNextButton = currentIndex + getVisibleCount() >= cards.length;
-  disabledNextButton ? nextButton.classList.add("disabled") : nextButton.classList.remove("disabled"); 
-}
-
-// Função para voltar um card
-function prevCard() {
-  // Só volta se não estiver no início da lista
-  if (currentIndex > 0) {
-    currentIndex -= 1; // volta uma posição
-    showCards();       // atualiza os cards na tela
-  }
-}
-
-// Função para avançar um card
-function nextCard() {
-  // Só avança se ainda houver cards à frente
-  if (currentIndex + getVisibleCount() < cards.length) {
-    currentIndex += 1; // avança uma posição
-    showCards();       // atualiza os cards na tela
-  }
-}
-
-// Quando clicar na seta de voltar, chama a função prevCard
-prevButton.addEventListener("click", prevCard);
-
-// Quando clicar na seta de avançar, chama a função nextCard
-nextButton.addEventListener("click", nextCard);
-
-// Exibe os primeiros cards quando a página carregar
-showCards();
-window.addEventListener("resize", showCards);
 
 
 
@@ -130,5 +85,59 @@ document.addEventListener("DOMContentLoaded", function(){
         loading.style.display = "none";
         errorMessage.style.display = "block";
       });
+  });
+});
+
+/* scroll */
+
+// Função que faz a rolagem suave até uma seção específica da página
+// Função que faz a rolagem suave até uma seção específica da página
+// Função que faz a rolagem suave até uma seção específica da página
+function scrollToSection(sectionId) {
+  const section = document.querySelector(sectionId); // Seleciona a seção pelo ID
+
+  if (section) {
+    let scrollOffset = 0;
+
+    // Se a seção for "projects", ajusta o deslocamento para deixar espaço no topo
+    if (sectionId === "#projects") {
+      scrollOffset = section.offsetTop - 70;
+    } else {
+      // Centraliza a seção na tela (calculando altura da tela e da seção)
+      scrollOffset = section.offsetTop - (window.innerHeight - section.clientHeight) / 2;
+    }
+
+    // Executa a rolagem suave até a posição calculada
+    window.scrollTo({
+      top: scrollOffset,
+      behavior: "smooth"
+    });
+  }
+}
+
+// Espera o DOM carregar para adicionar os eventos aos links
+document.addEventListener("DOMContentLoaded", function () {
+  // Seleciona todos os links do menu de navegação
+  const navLinks = document.querySelectorAll("nav a");
+
+  // Adiciona evento de clique para cada link
+  navLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault(); // Evita comportamento padrão do link
+      const sectionId = link.getAttribute("href"); // Pega o ID da seção
+      scrollToSection(sectionId); // Chama a função de rolagem
+    });
+  });
+
+  // Se você tiver links de rodapé diferentes, selecione aqui por outro seletor
+  const footerLinks = document.querySelectorAll("footer a");
+
+  // Adiciona evento de clique também aos links do rodapé
+  footerLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const sectionId = link.getAttribute("href");
+      scrollToSection(sectionId);
+    });
   });
 });
