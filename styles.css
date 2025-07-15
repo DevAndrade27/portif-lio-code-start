@@ -565,7 +565,7 @@ footer{
     }
     
     /* projetos */
-    .info-projetos{
+    .info-projetos{ 
       margin: 20px 0;
       flex-direction: column;
       align-items: center;
